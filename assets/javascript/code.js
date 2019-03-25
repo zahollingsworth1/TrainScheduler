@@ -17,9 +17,9 @@ var startTime = "";
 var frequency = 0;
 
 function currentTime() {
-    var now = moment().format("dddd, MMMM Do, YYYY");
+    var currentD = moment().format("dddd, MMMM Do, YYYY");
     var currentT = moment().format('LT');
-    $("#currentDate").text(now);
+    $("#currentDate").text(currentD);
     $("#currentTime").text(currentT);
     setTimeout(currentTime, 1000);
   };
@@ -37,7 +37,7 @@ $("#submit").on("click", function(event) {
         $("#first-train").val().trim() === "" ||
         $("#frequency").val().trim() === "") {
 
-            alert("Please fill in all details to add new train");
+            alert("fill out the details first");
 
         } else {
     
@@ -83,15 +83,15 @@ database.ref().on("child_added", function(childSnapshot) {
         //removal
         var key = childSnapshot.key;
       
-        var newrow = $("<tr>");
-          newrow.append($("<td>" + childSnapshot.val().trainName + "</td>"));
-          newrow.append($("<td>" + childSnapshot.val().destination + "</td>"));
-          newrow.append($("<td class='text-center'>" + childSnapshot.val().frequency + "</td>"));
-          newrow.append($("<td class='text-center'>" + moment(nextTrain).format("LT") + "</td>"));
-          newrow.append($("<td class='text-center'>" + minToArrival + "</td>"));
-          newrow.append($("<td class='text-center'><button class='arrival btn btn-danger btn-xs' data-key='" + key + "'>Remove</button></td>"));
+        var newInfo = $("<tr>");
+          newInfo.append($("<td>" + childSnapshot.val().trainName + "</td>"));
+          newInfo.append($("<td>" + childSnapshot.val().destination + "</td>"));
+          newInfo.append($("<td class='text-center'>" + childSnapshot.val().frequency + "</td>"));
+          newInfo.append($("<td class='text-center'>" + moment(nextTrain).format("LT") + "</td>"));
+          newInfo.append($("<td class='text-center'>" + minToArrival + "</td>"));
+          newInfo.append($("<td class='text-center'><button class='arrival btn btn-danger btn-xs' data-key='" + key + "'>Remove</button></td>"));
       
-        $("#newTrains").append(newrow);
+        $("#newTrains").append(newInfo);
     
     });
 
@@ -102,10 +102,4 @@ $(document).on("click", ".arrival", function() {
     window.location.reload();
   });
 
-
-
-//refresh
-//setInterval(function() {
-//    window.location.reload();
-//}, 1000 * 60);
   
